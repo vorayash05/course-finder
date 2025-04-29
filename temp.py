@@ -1,4 +1,4 @@
-import streamlit as st
+rssimport streamlit as st
 import pandas as pd
 import numpy as np
 
@@ -79,7 +79,7 @@ filtered_df = filtered_df.rename(columns={
 # Columns to display
 columns_to_display = [
     'Course Type', 'Course Name', 'Course Link', 'Intake',
-    'Degree Type', 'Entry Requirements', 'Duration (months)',
+    'Degree Type', 'Entry Requirements', 'Duration (years)',
     'Location']
 
 # Display section
