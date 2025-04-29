@@ -26,15 +26,12 @@ col1, col2, col3, col4 = st.columns([2, 2, 2, 4])
 
 with col1:
     selected_course_types = st.multiselect(
-        "🎓 Course Type", ['Undergraduate', 'Postgraduate'], default=['Undergraduate', 'Postgraduate']
+        "🎓 Course Type", ['Undergraduate', 'Postgraduate'], default=['Postgraduate']
     )
 
 with col2:
     available_countries = sorted(df['country'].dropna().unique())
     selected_countries = st.multiselect("🌍 Country", available_countries)
-
-with col3:
-    max_budget = st.slider("💰 Max Tuition (INR)", 500000, 5000000, 2000000, step=50000)
 
 with col4:
     search_keyword = st.text_input("🔍 Course Name", placeholder="e.g., Computer Science").strip().lower()
@@ -54,10 +51,10 @@ country_to_inr = {
 }
 df['conversion_rate'] = df['country'].map(country_to_inr)
 df['tuition_in_inr'] = df['tuition'] * df['conversion_rate']
-tuition_filter = df['tuition_in_inr'] <= max_budget
+#tuition_filter = df['tuition_in_inr'] <= max_budget
 
 # Apply all filters
-filtered_df = df[course_filter & country_filter & tuition_filter & name_filter]
+filtered_df = df[course_filter & country_filter & name_filter]
 
 # Remove duplicates by course name
 filtered_df = filtered_df.drop_duplicates(subset='name')
@@ -71,19 +68,17 @@ filtered_df = filtered_df.rename(columns={
     'degree_type': 'Degree Type',
     'entry_requirements': 'Entry Requirements',
     'duration': 'Duration (months)',
-    'location': 'Location',
-    'tuition_in_inr': 'Tuition (INR)'
+    'location': 'Location'
 })
 
 # Format tuition fee in Indian comma style (e.g., 12,00,000)
-filtered_df['Tuition (INR)'] = filtered_df['Tuition (INR)'].apply(lambda x: f"{int(x):,}".replace(",", "X").replace(".", ",").replace("X", ","))
+#filtered_df['Tuition (INR)'] = filtered_df['Tuition (INR)'].apply(lambda x: f"{int(x):,}".replace(",", "X").replace(".", ",").replace("X", ","))
 
 # Columns to display
 columns_to_display = [
     'Course Type', 'Course Name', 'Course Link', 'Intake',
     'Degree Type', 'Entry Requirements', 'Duration (months)',
-    'Location', 'Tuition (INR)'
-]
+    'Location']
 
 # Display section
 st.markdown("## 📋 Filtered Course List")
