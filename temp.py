@@ -16,6 +16,8 @@ def load_data():
 
 df = load_data()
 
+df['duration'] = (df['duration'] / 12).round(1)
+
 # Filter only Undergraduate and Postgraduate
 df = df[df['courseType'].isin(['Undergraduate', 'Postgraduate'])]
 
@@ -67,7 +69,7 @@ filtered_df = filtered_df.rename(columns={
     'intake': 'Intake',
     'degree_type': 'Degree Type',
     'entry_requirements': 'Entry Requirements',
-    'duration': 'Duration (months)',
+    'duration': 'Duration (years)',
     'location': 'Location'
 })
 
